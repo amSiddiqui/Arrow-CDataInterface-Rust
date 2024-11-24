@@ -1,6 +1,12 @@
 use std::{ffi::c_void, i32, ptr};
 use rand::{distributions::uniform::Uniform, Rng};
 
+
+/// Rust representation of the `ArrowArray` struct from the Arrow C Data Interface.
+/// This struct describes the memory layout of an Arrow array and its buffers.
+///
+/// For the C definition and more details, see:
+/// https://arrow.apache.org/docs/format/CDataInterface.html#structure-definitions
 #[repr(C)]
 pub struct ArrowArray {
     pub length: i64,
@@ -26,8 +32,10 @@ fn generate_date(size: usize) -> Vec<i32> {
     res
 }
 
-
-
+/// Exports an array of random `int32` data via the Arrow C Data Interface.
+///
+/// This function populates the provided `ArrowArray` with generated `int32` data.
+/// The caller is responsible for calling the `release` callback to free resources.
 #[no_mangle]
 pub extern "C" fn export_int32_data(array: *mut ArrowArray) {
     let data = Box::new(generate_date(1000));
@@ -52,7 +60,10 @@ pub extern "C" fn export_int32_data(array: *mut ArrowArray) {
     }
 }
 
-
+/// Release callback for the `ArrowArray`.
+///
+/// This function is called to free the resources associated with the `ArrowArray`.
+/// It cleans up allocated memory for buffers and private data.
 extern "C" fn arrow_array_release(array: *mut ArrowArray) {
     unsafe {
         if array.is_null() || (*array).release.is_none() {
@@ -62,11 +73,13 @@ extern "C" fn arrow_array_release(array: *mut ArrowArray) {
         let buffers_ptr = (*array).buffers as *mut *const c_void;
         if !buffers_ptr.is_null() {
             let _buffers = Box::from_raw(buffers_ptr);
+            // Buffers are now dropped
         }
 
         let data_ptr = (*array).private_data as *mut Vec<i32>;
         if !data_ptr.is_aligned() {
             let _data = Box::from(data_ptr);
+            // Data vector is now dropped
         }
 
         (*array).release = None;
