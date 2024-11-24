@@ -1,6 +1,6 @@
 # Arrow Exporter Example in Rust
 
-This project demonstrates how to use the Apache Arrow C Data Interface in Rust, C, and Python. It is an example adapted from Matt Topol's book on Arrow, translated into Rust.
+This project demonstrates how to use the Apache [Arrow C Data Interface](https://arrow.apache.org/docs/format/CDataInterface.html) in Rust, C, and Python. It is an example adapted from Matt Topol's book on [Arrow](https://www.amazon.co.uk/Memory-Analytics-Apache-Arrow-hierarchical-ebook/dp/B09X76LNN9), translated into Rust.
 
 ## Overview
 
@@ -160,7 +160,7 @@ arrow-exporter/
 ## References
 
 - **Apache Arrow C Data Interface**: [Arrow C Data Interface Documentation](https://arrow.apache.org/docs/format/CDataInterface.html)
-- **Matt Topol's Book on Arrow**: This example is adapted from Matt Topol's book, demonstrating practical usage of Arrow across different languages.
+- **Matt Topol's Book on Arrow**: This example is adapted from Matt Topol's [book](https://www.amazon.co.uk/Memory-Analytics-Apache-Arrow-hierarchical-ebook/dp/B09X76LNN9), demonstrating practical usage of Arrow across different languages.
 
 ## License
 
